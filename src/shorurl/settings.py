@@ -25,7 +25,7 @@ SECRET_KEY = 'jw!ko#!xmc%uq&vhdca_bc66smrpt4($nq_m+s$@dju_13n2%v'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['www.morurl.com','morurl.com']
 
 
 # Application definition
@@ -37,11 +37,15 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    #third party
+    'django_hosts',
     #Custom app
     'shortener'
+
 ]
 
 MIDDLEWARE = [
+    'django_hosts.middleware.HostsRequestMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -49,9 +53,13 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django_hosts.middleware.HostsRequestMiddleware',
 ]
 
 ROOT_URLCONF = 'shorurl.urls'
+ROOT_HOSTCONF = 'shorurl.hosts'
+DEFAULT_HOST ='www'
+DEFAULT_REDIRECT_URL = "http://www.morurl.com", "http://morurl.com","http://shorurl.com","http://www.shorurl.com"
 
 TEMPLATES = [
     {
@@ -120,3 +128,6 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_URL = '/static/'
+
+SHORTCODE_MAX = 15
+SHORTCODE_MIN = 6
