@@ -23,13 +23,23 @@ class HomeView(View):
 
 	def post(self,request,*args,**kwargs):
 		form = SubmitUrlForm(request.POST)
-		if form.is_valid():
-			print(form.cleaned_data.get('url'))
 		context = {
-			"title":"ShorURL ",
+			"title":"ShorURL.co",
 			"form": form
 		}
-		return render(request, "shortener/home.html", context)
+		template = "sortener/home.html" #makes page dynamic, pages change but url doesn't
+		if form.is_valid():
+			new_url = form.cleaned_data.get("url")
+			obj, created = ShorURL.objects.get_or_create(url=new_url)
+			context = {
+			"object": obj,
+			"created": created,
+			}
+		if created:
+			template = "shortener/success.html"
+		else:
+			template = "shortener/already-created.html"
+		return render(request, template, context)
 
 class ShorCBView(View):
 	def get(self, request, shortcode= None, *args, **kwargs): #Class Based Views

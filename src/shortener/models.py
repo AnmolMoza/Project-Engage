@@ -1,10 +1,10 @@
 
 from django.db import models
 
-
 # Create your models here.
 
 from .utils import code_generator, create_shortcode
+from .validators import validate_url, validate_dot_com
 from django.conf import settings
 
 SHORTCODE_MAX = getattr(settings, "SHORTCODE_MAX", 15) #when got to use in other project too
@@ -29,7 +29,7 @@ class ShorURLManager(models.Manager): #Filer out active shortcodes, Model manage
 
 
 class ShorURL(models.Model):
-	url 		= models.CharField(max_length = 1000, )
+	url 		= models.CharField(max_length = 1000, validators = [validate_url,validate_dot_com])
 	shortcode 	= models.CharField(max_length = SHORTCODE_MAX, unique = True, blank = True)
 	updated		= models.DateTimeField(auto_now = True)
 	timestamp	= models.DateTimeField(auto_now_add = True)
