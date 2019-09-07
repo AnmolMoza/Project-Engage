@@ -1,7 +1,15 @@
-<div style='align-text: center;width: 800px; margin: 0 auto;'>
-	<h1> Exists </h1>
-	<p> {{ object.url }} </p>
+{% extends "shortener/base.html" %}
 
-	<p> {{ object.shortcode }} </p>
-	<a href="/"> New</a>
+{% block title %}
+{{ object.shortcode }} {{ block.super}}
+{% endblock title %}
+
+{% block content %}
+<div>
+	<h1>Already Exists!</h1>
+	<p> Your short URL is </p>
+
+	<p><a class="btn btn-link" target="_blank" href=" {{ object.get_short_url }}">{{ object.get_short_url }}</a> </p>
+	<a class="btn btn-primary " href="/"> New</a>
 </div>
+{% endblock content %}

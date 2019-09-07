@@ -16,11 +16,11 @@ Including another URLconf
 from django.contrib import admin
 from django.conf.urls import url
 
-from shortener.views import HomeView, ShorCBView
+from shortener.views import HomeView, URLRedirectView
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^$', HomeView.as_view()),
-    #url(r'^a/(?P<shortcode>[\w-]+){6,15}/$', shorurl_redirect_view),
-    url(r'^(?P<shortcode>[\w-]+){6,15}/$', ShorCBView.as_view()),
+    url(r'^(?P<shortcode>[\w-]+)/$', URLRedirectView.as_view(), name ="scode"),
+    
 ]

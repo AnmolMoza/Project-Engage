@@ -6,6 +6,7 @@ from django.db import models
 from .utils import code_generator, create_shortcode
 from .validators import validate_url, validate_dot_com
 from django.conf import settings
+from django_hosts.resolvers import reverse
 
 SHORTCODE_MAX = getattr(settings, "SHORTCODE_MAX", 15) #when got to use in other project too
 #SHOTCODE_MAX = settings.SHORTCODE_MAX   #when we dont have reusable ap
@@ -35,10 +36,12 @@ class ShorURL(models.Model):
 	timestamp	= models.DateTimeField(auto_now_add = True)
 	active		= models.BooleanField(default = True)
 	objects		= ShorURLManager()
+	
 	def save(self, *args, **kwargs):
-		#print("Something")
 		if self.shortcode is None or self.shortcode == "": #If blank sets the code by itself
-			self.shortcode = code_generator()
+			self.shortcode = create_shortcode(self)
+		if not "http" in self.url:
+			self.url = "http://" + self.url
 		super(ShorURL, self).save(*args, **kwargs)
 
 
@@ -48,3 +51,8 @@ class ShorURL(models.Model):
 
 	def __unicode__(self):
 		return str(self.url)
+
+
+	def get_short_url(self):
+		url_path = reverse("scode", kwargs={'shortcode':self.shortcode}, host='www', scheme='http')
+		return url_path

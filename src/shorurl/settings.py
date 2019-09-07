@@ -40,7 +40,9 @@ INSTALLED_APPS = [
     #third party
     'django_hosts',
     #Custom app
+    'analytics',
     'shortener'
+    
 
 ]
 
@@ -59,12 +61,13 @@ MIDDLEWARE = [
 ROOT_URLCONF = 'shorurl.urls'
 ROOT_HOSTCONF = 'shorurl.hosts'
 DEFAULT_HOST ='www'
-DEFAULT_REDIRECT_URL = "http://www.morurl.com", "http://morurl.com","http://shorurl.com","http://www.shorurl.com"
+DEFAULT_REDIRECT_URL = "http://www.morurl.com:8000", "http://morurl.com:8000","http://shorurl.com:8000","http://www.shorurl.com:8000"
+PARENT_HOST = "morurl.com:8000"
 
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -89,6 +92,8 @@ DATABASES = {
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
+
+
 
 
 # Password validation
