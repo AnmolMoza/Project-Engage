@@ -1,6 +1,6 @@
 from django import forms
 
-from .validators import validate_url, validate_dot_com
+from .validators import validate_url
 
 class SubmitUrlForm(forms.Form):
 	url = forms.CharField(
