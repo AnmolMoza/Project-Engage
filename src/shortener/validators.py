@@ -15,3 +15,7 @@ def validate_url(value): #Custom Validator
 		raise ValidationError("Invalid URL for this field")
 	return new_value	
 
+def validate_dot_com(value):
+	if not "." in value:
+		raise ValidationError("This is not valid because of no .com")
+	return value

@@ -51,6 +51,3 @@ class URLRedirectView(View):
 		print(ClickEvent.objects.create_event(obj))
 		return HttpResponseRedirect(obj.url)
 		
-
-
-		#10:33
